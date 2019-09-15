@@ -1,9 +1,14 @@
+language: node_js
+node_js:
+  - '8'
+
 branches:
   only:
     - master
+
 jobs:
   include:
     - script: ./test
     - stage: publish
-      if: branch = master
+      if: type = push
       script: ./verify-changes
