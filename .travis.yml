@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '8'
+  - '10'
 
 branches:
   only:
@@ -9,6 +9,9 @@ branches:
 jobs:
   include:
     - script: ./test
-    - stage: publish
+    - stage: verify changes
       if: type = push
       script: ./verify-changes
+    - stage: publish
+      if: type = push
+      script: ./publish
