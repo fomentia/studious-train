@@ -1,0 +1,5 @@
+#!/bin/sh
+
+openssl aes-256-cbc -K $encrypted_295815cf54f3_key -iv $encrypted_295815cf54f3_iv -in secret.txt.enc -out secret.txt -d
+
+node ./verifyChanges.js

@@ -7,3 +7,9 @@ branches:
     - master
 
 script: ./test
+
+jobs:
+  include:
+  - stage: publish
+    node_js: '10'
+    script: ./verify-changes
