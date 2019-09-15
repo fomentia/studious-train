@@ -6,4 +6,9 @@ branches:
   only:
     - master
 
-script: ./test
+jobs:
+  include:
+    - script: ./test
+    - stage: publish
+      if: type = push
+      script: ./verify-changes
