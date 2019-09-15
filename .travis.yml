@@ -7,8 +7,9 @@ branches:
     - master
 
 env:
-  - J1_ACCOUNT=lifeomic
-  - J1_INTEGRATION_INSTANCE_ID="b8cfacbd-551a-48dc-b0f9-aef6e5ab493e"
+  global:
+    - J1_ACCOUNT=lifeomic
+    - J1_INTEGRATION_INSTANCE_ID="b8cfacbd-551a-48dc-b0f9-aef6e5ab493e"
 
 jobs:
   include:
