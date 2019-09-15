@@ -47,9 +47,9 @@ const JupiterOneChangeManagementClient = require('@jupiterone/jupiter-change-man
   if (reviewProcessVerdict.verdict === "NEEDS_HUMAN_REVIEW") {
     throw "Needs human review!";
   }
-})().then(
-  exit.bind(undefined, 0, "Changes verified!")
-).catch((reason) => {
+})().then(() => {
+  exit(0, "Changes verified!");
+}).catch((reason) => {
   exit(1, reason);
 });
 
