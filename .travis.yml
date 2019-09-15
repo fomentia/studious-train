@@ -8,6 +8,10 @@ branches:
 
 script: ./test
 
+stages:
+  - name: publish
+    if: branch = master
+
 jobs:
   include:
   - stage: publish
