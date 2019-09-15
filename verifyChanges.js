@@ -1,5 +1,5 @@
 const fs = require('fs');
-const JupiterOneChangeManagementClient = require('@jupiterone/jupiter-change-management-client');
+const { JupiterOneChangeManagementClient } = require('@jupiterone/jupiter-change-management-client');
 
 (async function() {
   const jupiterOneAccount = process.argv[2];
@@ -11,18 +11,21 @@ const JupiterOneChangeManagementClient = require('@jupiterone/jupiter-change-man
 
   let j1Token;
   try {
-    j1Token = fs.readFileSync("./secret.txt").toString();
+    j1Token = fs.readFileSync("./secret.txt", { encoding: 'utf-8' }).trim();
   } catch (err) {
     console.log(err);
-    exit(1);
+    process.exit(1);
   }
 
+  console.log("Initializing client...");
   const cmClient = await new JupiterOneChangeManagementClient(
     jupiterOneAccount,
     jupiterOneIntegrationInstanceId,
     j1Token
   ).init();
+  console.log("Initialized client!");
 
+  console.log("Collecting entities...");
   await cmClient.collectPREntities(
     [
       {
@@ -39,6 +42,7 @@ const JupiterOneChangeManagementClient = require('@jupiterone/jupiter-change-man
       }
     ]
   );
+  console.log("Collected entities!");
 
   const reviewProcessVerdict = cmClient.buildReviewProcessComment();
 
@@ -48,8 +52,10 @@ const JupiterOneChangeManagementClient = require('@jupiterone/jupiter-change-man
     throw "Needs human review!";
   }
 })().then(() => {
-  exit(0, "Changes verified!");
+  console.log("Changes verified!");
+  process.exit(0);
 }).catch((reason) => {
-  exit(1, reason);
+  console.log(`Failed! ${reason}`);
+  process.exit(1);
 });
 
