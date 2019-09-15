@@ -1,19 +1,9 @@
-language: node_js
-node_js:
-  - '8'
-
 branches:
   only:
     - master
-
-script: ./test
-
-stages:
-  - name: publish
-    if: branch = master
-
 jobs:
   include:
-  - stage: publish
-    node_js: '10'
-    script: ./verify-changes
+    - script: ./test
+    - stage: publish
+      if: branch = master
+      script: ./verify-changes
